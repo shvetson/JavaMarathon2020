@@ -12,11 +12,12 @@ public class Task3 {
         if (a >= b) {
             System.err.println("Некорректный ввод");
         } else {
+            a = a + 1;
             while (a < b) {
-                ++a;
                 if ((a % 5 == 0) && !(a % 10 == 0)) {
                     System.out.print(a + " ");
                 }
+                a++;
             }
         }
         scanner.close();
