@@ -10,9 +10,9 @@ public class Task1 {
 
         if (floor <= 0) {
             System.err.println("Ошибка ввода");
-        } else if (floor > 1 && floor <= 4) {
+        } else if (floor >= 1 && floor <= 4) {
             System.out.println("Малоэтажный дом");
-        } else if (floor > 5 && floor <= 8) {
+        } else if (floor >= 5 && floor <= 8) {
             System.out.println("Среднеэтажный дом");
         } else {
             System.out.println("Многоэтажный дом");

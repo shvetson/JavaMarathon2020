@@ -7,14 +7,16 @@ public class Task4 {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите число: ");
         double x = scanner.nextDouble();
+        double y;
 
         if (x >= 5) {
-            System.out.printf("%.2f\n", (Math.pow(x, 2) - 10) / (x + 7));
+            y = (Math.pow(x, 2) - 10) / (x + 7);
         } else if (x < 5 && x > -3) {
-            System.out.printf("%.2f\n", (x + 3) / (Math.pow(x, 2) - 2));
+            y = (x + 3) / (Math.pow(x, 2) - 2);
         } else {
-            System.out.println("420");
+            y = 420;
         }
         scanner.close();
+        System.out.printf("%.2f\n", y);
     }
 }
