@@ -19,16 +19,17 @@ public class Task1 {
         try {
             listShoes = parseDataFromFileToList(file1);
             printWriter = new PrintWriter(file2);
+
+            for (Record item : listShoes) {
+                if (item.getCount() == 0) {
+                    printWriter.println(item.getName() + ", " + item.getSize() + ", " + item.getCount());
+                }
+            }
+            printWriter.close();
+
         } catch (FileNotFoundException e) {
             System.err.println("Файл не найден.");
         }
-
-        for (Record item : listShoes) {
-            if (item.getCount() == 0) {
-                printWriter.println(item.getName() + ", " + item.getSize() + ", " + item.getCount());
-            }
-        }
-        printWriter.close();
     }
 
     public static List<Record> parseDataFromFileToList(File file) throws FileNotFoundException {
