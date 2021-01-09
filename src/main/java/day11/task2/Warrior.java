@@ -1,6 +1,6 @@
 package day11.task2;
 
-public class Warrior extends Hero implements PhysAttack {
+public class Warrior extends Hero {
     private double health;
     private int physAtt;
     private double physDef;
@@ -29,19 +29,12 @@ public class Warrior extends Hero implements PhysAttack {
         return magicDef;
     }
 
-    @Override
-    public String toString() {
-        return "Warrior {health=" + health + "}";
+    public double getPhysAtt() {
+        return physAtt;
     }
 
     @Override
-    public void physicalAttack(Hero hero) {
-        double newHealth = hero.getHealth() - (physAtt * (1 - hero.getPhysDef()));
-        if (newHealth > 0) {
-            hero.setHealth(newHealth);
-        } else {
-            hero.setHealth(0);
-        }
-        System.out.println(hero);
+    public String toString() {
+        return "Warrior {health=" + health + "}";
     }
 }

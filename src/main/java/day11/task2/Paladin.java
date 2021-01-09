@@ -1,13 +1,12 @@
 package day11.task2;
 
-public class Paladin extends Hero implements PhysAttack, Healer {
+public class Paladin extends Hero implements Healer {
     private double health;
     private int physAtt;
     private double physDef;
     private double magicDef;
-    private double valueHealthHimself = 25;
-    private double valueHealthTeammate = 10;
-
+    private final double VALUE_HEALTH_HIMSELF = 25;
+    private final double VALUE_HEALTH_TEAMMATE = 10;
 
     public Paladin() {
         health = 100;
@@ -32,25 +31,17 @@ public class Paladin extends Hero implements PhysAttack, Healer {
         return magicDef;
     }
 
+    public double getPhysAtt() {
+        return physAtt;
+    }
     @Override
     public String toString() {
         return "Paladin {health=" + health + "}";
     }
 
     @Override
-    public void physicalAttack(Hero hero) {
-        double newHealth = hero.getHealth() - (physAtt * (1 - hero.getPhysDef()));
-        if (newHealth > 0) {
-            hero.setHealth(newHealth);
-        } else {
-            hero.setHealth(0);
-        }
-        System.out.println(hero);
-    }
-
-    @Override
     public void healHimself() {
-        double newHealth = health + valueHealthHimself;
+        double newHealth = health + VALUE_HEALTH_HIMSELF;
         if (newHealth < 100) {
             health = newHealth;
         } else {
@@ -61,7 +52,7 @@ public class Paladin extends Hero implements PhysAttack, Healer {
 
     @Override
     public void healTeammate(Hero hero) {
-        double newHealth = hero.getHealth() + valueHealthTeammate;
+        double newHealth = hero.getHealth() + VALUE_HEALTH_TEAMMATE;
         if (newHealth < 100) {
             hero.setHealth(newHealth);
         } else {

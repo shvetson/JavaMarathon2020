@@ -1,7 +1,5 @@
 package day9.Task2;
 
-import day9.Task2.Figure;
-
 public class Rectangle extends Figure {
     private double a;
     private double b;

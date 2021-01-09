@@ -1,13 +1,13 @@
 package day11.task2;
 
-public class Shaman extends Hero implements PhysAttack, MagicAttack, Healer {
+public class Shaman extends Hero implements MagicAttack, Healer {
     private double health;
     private int physAtt;
     private int magicAtt;
     private double physDef;
     private double magicDef;
-    private double valueHealthHimself = 50;
-    private double valueHealthTeammate = 30;
+    private final double VALUE_HEALTH_HIMSELF = 50;
+    private final double VALUE_HEALTH_TEAMMATE = 30;
 
     public Shaman() {
         health = 100.0;
@@ -33,20 +33,13 @@ public class Shaman extends Hero implements PhysAttack, MagicAttack, Healer {
         return magicDef;
     }
 
-    @Override
-    public String toString() {
-        return "Shaman {health=" + health + "}";
+    public double getPhysAtt() {
+        return physAtt;
     }
 
     @Override
-    public void physicalAttack(Hero hero) {
-        double newHealth = hero.getHealth() - (physAtt * (1 - hero.getPhysDef()));
-        if (newHealth > 0) {
-            hero.setHealth(newHealth);
-        } else {
-            hero.setHealth(0);
-        }
-        System.out.println(hero);
+    public String toString() {
+        return "Shaman {health=" + health + "}";
     }
 
     @Override
@@ -62,7 +55,7 @@ public class Shaman extends Hero implements PhysAttack, MagicAttack, Healer {
 
     @Override
     public void healHimself() {
-        double newHealth = health + valueHealthHimself;
+        double newHealth = health + VALUE_HEALTH_HIMSELF;
         if (newHealth < 100) {
             health = newHealth;
         } else {
@@ -73,7 +66,7 @@ public class Shaman extends Hero implements PhysAttack, MagicAttack, Healer {
 
     @Override
     public void healTeammate(Hero hero) {
-        double newHealth = hero.getHealth() + valueHealthTeammate;
+        double newHealth = hero.getHealth() + VALUE_HEALTH_TEAMMATE;
         if (newHealth < 100) {
             hero.setHealth(newHealth);
         } else {

@@ -1,7 +1,5 @@
 package day9.Task1;
 
-import day9.Task1.Human;
-
 public class Student extends Human {
     private String groupName;
 

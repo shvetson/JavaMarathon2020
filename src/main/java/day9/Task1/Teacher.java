@@ -1,7 +1,5 @@
 package day9.Task1;
 
-import day9.Task1.Human;
-
 public class Teacher extends Human {
     private String subjectName;
 

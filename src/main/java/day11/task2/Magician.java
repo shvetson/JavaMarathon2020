@@ -1,6 +1,6 @@
 package day11.task2;
 
-public class Magician extends Hero implements PhysAttack, MagicAttack {
+public class Magician extends Hero implements MagicAttack {
     private double health;
     private int physAtt;
     private int magicAtt;
@@ -27,24 +27,16 @@ public class Magician extends Hero implements PhysAttack, MagicAttack {
         return physDef;
     }
 
-    public double getMagicDef() {
-        return magicDef;
+    public double getMagicDef() {return magicDef;
+    }
+
+    public double getPhysAtt() {
+        return physAtt;
     }
 
     @Override
     public String toString() {
         return "Magician {health=" + health + "}";
-    }
-
-    @Override
-    public void physicalAttack(Hero hero) {
-        double newHealth = hero.getHealth() - (physAtt * (1 - hero.getPhysDef()));
-        if (newHealth > 0) {
-            hero.setHealth(newHealth);
-        } else {
-            hero.setHealth(0);
-        }
-        System.out.println(hero);
     }
 
     @Override
