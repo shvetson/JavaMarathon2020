@@ -1,5 +1,6 @@
 package finalTask;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,45 +13,66 @@ public class BattleShip {
     static int countDouble;
     static int countThree;
     static int countFour;
-    static Scanner scanner1;
+    static Scanner scanner;
+    static Random random;
 
     public static void main(String[] args) {
         field1 = new Figure[COUNT_CELL][COUNT_CELL];
         field2 = new Figure[COUNT_CELL][COUNT_CELL];
+        scanner = new Scanner(System.in);
+        random = new Random();
 
         System.out.println("Начнем расставлять корабли на поле - Игрок 1. Другой игрок, не смотри!");
         inputData(field1);
         BattleField battleField1 = new BattleField(field1);
-        battleField1.print();
-        System.out.println(battleField1.countShip());
+        System.out.println();
 
         System.out.println("Начнем расставлять корабли на поле - Игрок 2. Первый игрок, не смотри!");
         inputData(field2);
         BattleField battleField2 = new BattleField(field2);
-        battleField2.print();
+        System.out.println();
 
-        scanner1 = new Scanner(System.in);
+        System.out.println("Игра начинается!");
 
-        for (; ; ) {
-            turnPlayer(1, battleField1, 2, battleField2);
-            if (battleField2.countShip() == 0) {
-                System.out.println("Вы победили!");
-                battleField2.print();
-                break;
-            }
-            turnPlayer(2, battleField2, 1, battleField1);
-            if (battleField1.countShip() == 0) {
-                System.out.println("Вы победили!");
-                battleField1.print();
-                break;
-            }
-        }
+        game(battleField1, battleField2);
+        System.out.println();
+
         System.out.println("Игра окончена!");
-        scanner1.close();
+        scanner.close();
     }
 
-    public static void turnPlayer(int playerAttack, BattleField fieldAttack, int playerDefence, BattleField fieldDefence) {
-        //Scanner scanner = new Scanner(System.in);
+    // игра - ходы игроков и проверки попаданий, завершение игры
+    public static void game(BattleField field1, BattleField field2) {
+        boolean turnPlayer = random.nextBoolean();
+        for (; ; ) {
+            if (turnPlayer) {
+                if (turn(1, field1, 2, field2)) {
+                    turnPlayer = true;
+                } else {
+                    turnPlayer = false;
+                }
+                if (field2.countShip() == 0) {
+                    System.out.println("Вы победили!");
+                    field2.print();
+                    break;
+                }
+            } else {
+                if (turn(2, field2, 1, field1)) {
+                    turnPlayer = false;
+                } else {
+                    turnPlayer = true;
+                }
+                if (field1.countShip() == 0) {
+                    System.out.println("Вы победили!");
+                    field1.print();
+                    break;
+                }
+            }
+        }
+    }
+
+    // ход игрока
+    public static boolean turn(int playerAttack, BattleField fieldAttack, int playerDefence, BattleField fieldDefence) {
         Pattern pattern = Pattern.compile("^([1-9]|10),([1-9]|10)$");
         Matcher matcher = null;
         String line;
@@ -59,12 +81,12 @@ public class BattleShip {
 
         for (; ; ) {
             System.out.print("Игрок " + playerAttack);
-            System.out.println(" Ход (x1, y1): ");
-            line = scanner1.nextLine();
+            System.out.println(", Ваш ход (x1, y1): ");
+            line = scanner.nextLine();
 
             if (line.equals("info")) {
                 System.out.println("Игрок " + playerAttack + ": " + fieldAttack.countShip() +
-                        "\nИгрок " + playerDefence + ": " + fieldDefence.countShip());
+                        " vs Игрок " + playerDefence + ": " + fieldDefence.countShip());
                 continue;
             }
             if (line.equals("print")) {
@@ -73,7 +95,7 @@ public class BattleShip {
             }
             matcher = pattern.matcher(line);
             if (!matcher.matches()) {
-                System.err.println("Ошибка ввода, соблюдайте формат - x1, y1; x2, y2)");
+                System.err.println("Ошибка ввода, соблюдайте формат");
             } else {
                 break;
             }
@@ -85,17 +107,16 @@ public class BattleShip {
             cells[counter] = number;
             counter++;
         }
-        fieldDefence.turn(cells);
-        //scanner.close();
+        return fieldDefence.checkTurn(cells);
     }
 
+    // Расстановка кораблей на поле
     public static void inputData(Figure[][] field) {
-        countSingle = 2;
+        countSingle = 1;
         countDouble = 0;
         countThree = 0;
-        countFour = 0;
+        countFour = 1;
 
-        Scanner scanner = new Scanner(System.in);
         Pattern pattern = Pattern.compile("^([1-9]|10),([1-9]|10);([1-9]|10),([1-9]|10)$");
         Matcher matcher;
 
@@ -106,9 +127,6 @@ public class BattleShip {
             System.out.printf("Введите координаты корабля, цифры от 1 до %s (формат: x1, y1; x2, y2)\n", COUNT_CELL);
             String line = scanner.nextLine();
 
-            if (line.equals("exit")) {
-                break;
-            }
             if (line.equals("info")) {
                 info();
                 continue;
@@ -140,10 +158,9 @@ public class BattleShip {
                 return;
             }
         }
-        scanner.close();
     }
 
-    // проверка остатка кораблей определенной размерности
+    // проверка оставшегося количества кораблей определенной размерности
     public static boolean checkLimitShip(int[] data) {
         int value = countDesk(data);
         if ((value == 1) && (countSingle == 0)) {

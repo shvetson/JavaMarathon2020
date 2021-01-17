@@ -16,12 +16,14 @@ public class BattleField {
         this.field = field;
     }
 
-    public void turn(int[] data) {
-        if (field[data[0] - 1][data[0] - 1] == Figure.SHIP) {
-            field[data[0] - 1][data[0] - 1] = Figure.RED;
+    public boolean checkTurn(int[] data) {
+        if (field[data[0] - 1][data[1] - 1] == Figure.SHIP) {
+            field[data[0] - 1][data[1] - 1] = Figure.RED;
             System.out.println("Попадание!");
+            return true;
         } else {
             System.err.println("Мимо!");
+            return false;
         }
     }
 
